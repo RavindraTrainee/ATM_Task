@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>ATM Screen</title>
+</head>
+
+<body>
+    <h1>ATM Screen</h1>
+    <form id="form_id" method="post" name="myform">
+        <label>UserName :</label>
+        <input type="text" name="username" id="username" /><br><br>
+        <label>Password :</label>
+        <input type="password" name="password" id="password" /><br><br>
+        <input type="button" value="Login" id="submit" onclick="logInValiadtion()" />
+    </form>
+
+    <script>
+        const first = ["ravi", "123", 100000];
+        const second = ["siva", "456", 33333];
+        var username;
+        var password;
+        var flag = true;
+
+        //Login Validation function
+        function logInValiadtion() {
+            if (flag) {
+                authentication();
+            }
+            chooseOption();
+        }
+
+        //authentication function
+        function authentication() {
+            console.log("authentication called");
+            username = document.getElementById("username").value;
+            password = document.getElementById("password").value;
+            if (username == first[0] && password == first[1] || username == second[0] && password == second[1]) {
+                alert("Login successfully.....");
+                chooseOption()
+            } else {
+
+                alert("Inncorrect Password...");
+                window.location = "index.html";
+
+            }
+
+        }
+
+        //chooseOption function
+        function chooseOption() {
+            var option = (prompt(" Choose one option \n 1-Withdraw \n 2-deposit \n 3-Balance \n 4-Logout:"));
+
+            switch (option) {
+                case "1":
+                    withdraw();
+                    chooseOption();
+                    break;
+                case "2":
+                    deposit();
+                    chooseOption();
+                    break;
+                case "3":
+                    accountBalance();
+                    chooseOption();
+                    break;
+                case "4":
+                    logOut();
+
+                    break;
+            }
+        }
+
+
+        //withdraw function
+        function withdraw() {
+            // console.log("withdraw called");
+            var userWithdrawAmount = prompt("Enter your Withdraw Amount");
+            if (username == first[0] && password == first[1]) {
+                //console.log("with if called");
+                if (userWithdrawAmount > first[2]) {
+                    alert("Insufficient Balance");
+                } else {
+                    first[2] -= userWithdrawAmount;
+                    alert("Please collect your cash and your balance is : " + first[2]);
+                }
+            } else {
+                // console.log("with else called");
+                second[2] -= userWithdrawAmount;
+                alert("Please collect your cash and your balance is : " + second[2]);
+            }
+            flag = false;
+            // console.log("withdraw called");
+        }
+
+        //Deposit function
+        function deposit() {
+            // console.log("dep called");
+            var userDepositAmount = prompt("Enter your deposit Amount : ");
+            if (username == first[0] && password == first[1]) {
+                //   console.log("case 1 called");
+                first[2] += parseInt(userDepositAmount);
+                alert("Your Deposite Successfully and your balance is : " + first[2]); //balance-int,
+            } else {
+                second[2] += parseInt(userDepositAmount);
+                alert("Your Deposite Successfully and your balance is : " + second[2]); //balance-int,
+            }
+            flag = false;
+            // logInValiadtion();
+            // console.log("dep called");
+        }
+
+        //check account balance function
+        function accountBalance() {
+            //  console.log("accountBalance called");
+            if (username == first[0] && password == first[1]) {
+                alert("your Balance is :" + first[2]);
+            } else {
+                alert("your Balance is :" + second[2]);
+            }
+            // console.log("case 1 called");
+            flag = false;
+            logInValiadtion();
+            // console.log("bal called");
+        }
+
+        //log out function
+        function logOut() {
+            alert("Logout \n Thank you MR...");
+            window.location = "index.html";
+            flag = false;
+            //  console.log("logout called");
+        }
+    </script>
+</body>
+
+</html>
